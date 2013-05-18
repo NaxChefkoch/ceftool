@@ -1,0 +1,14 @@
+{ "name": "ceftool"
+, "version": "0.0.1"
+, "engines": [ "node >=0.4.0" ]
+, "description": "To create cef projects really easy."
+, "author": " <zpoley@gmail.com> (http://zpoley.net)"
+, "contributors": [ "Isaac Schlueter <i@izs.me> (http://blog.izs.me)", "Andrey Tarantsov <andreyvit@gmail.com> (http://www.tarantsov.com/)", "Niek Schmoller <niek.schmoller@helderberg.nl> (http://helderberg.nl)", "Ryunosuke SATO (http://d.hatena.ne.jp/tricknotes/)", "Johan Sundström (http://ecmanaut.blogspot.com/)" ]
+, "keywords" : [ "json", "command", "shell" ]
+, "man" : "./man/json.1"
+, "repository":
+  { "type" : "git"
+  , "url" : "https://github.com/zpoley/json-command.git"
+  }
+, "bin" : { "json" : "./bin/json.js" }
+}
