@@ -9,6 +9,7 @@ var mkdirp = require('mkdirp'),
 	program = require('commander'),
 	fs = require('fs'),
 	os = require('os'),
+  creator = require('../lib/creator'),
 	pkg = require('../package.json'),
 	version = pkg.version;
 
@@ -29,14 +30,12 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-if (program.binaries) console.log('  - binaries');
-if (program.force) console.log('  - force');
+if (program.binaries);
+if (program.force);
 
 // Path
 var path = program.args.shift() || '.';
 var projectname = path.split('/')[path.split('/').length-1];
-console.log(projectname);
-console.log(path);
 
 //process.exit(1);
 // end-of-line code
@@ -59,7 +58,60 @@ function createApplicationAt(path) {
   });
 
   mkdir(path, function(){
-  	
+  	//Xcode Project
+    mkdir(path + '/' + projectname + '.xcodeproj', function() {
+        write(path + '/' + projectname + '.xcodeproj/project.pbxproj', creator.pbxproj(projectname));
+    });
+
+    //Visual Studio Project
+    write(path + '/' + projectname + '.sln', creator.sln(projectname));
+
+    mkdir(path + '/' + projectname, function() {
+      //VCXProject
+      write(path + '/' + projectname + '/' + projectname + '.vcxproj', creator.vcxproj(projectname));
+
+      //BINARIES
+      mkdir(path + '/' + projectname + '/CEF', function() {
+        //DOWNLOAD BINARRIES HERE
+      });
+
+      //Mac
+      mkdir(path + '/' + projectname + '/Mac', function() {
+        write(path + '/' + projectname + '/Mac/AppDelegate.h', creator.macappdh());
+        write(path + '/' + projectname + '/Mac/AppDelegate.mm', creator.macappdmm());
+        write(path + '/' + projectname + '/Mac/' + projectname + '-Prefix.pch', creator.macpch());
+        write(path + '/' + projectname + '/Mac/main.mm', creator.macmainmm());
+
+        mkdir(path + '/' + projectname + '/Mac/Resources', function() {
+          write(path + '/' + projectname + '/Mac/Resources/' + projectname + '-Info.plist', creator.macinfoplist());
+
+          mkdir(path + '/' + projectname + '/Mac/Resources/en.lproj', function() {
+            write(path + '/' + projectname + '/Mac/Resources/en.lproj/Credits.rtf', creator.maccredits());
+            write(path + '/' + projectname + '/Mac/Resources/en.lproj/InfoPlist.strings', creator.macinfopliststrings());
+            write(path + '/' + projectname + '/Mac/Resources/en.lproj/MainMenu.xib', creator.macmainmenu());
+          });
+
+        });
+      });
+
+      //Win
+      mkdir(path + '/' + projectname + '/Win', function() {
+        write(path + '/' + projectname + '/Win/main.cpp', creator.winmaincpp());
+      });
+
+      //Independent
+      mkdir(path + '/' + projectname + '/Independent', function() {
+        //CLIENT HANDLER
+        write(path + '/' + projectname + '/Independent/ClientHandler.h', creator.clienth());
+        write(path + '/' + projectname + '/Independent/ClientHandler.cpp', creator.clientcpp());
+
+        //HTML
+        
+      });
+    });
+    
+
+
   	/*
     mkdir(path + '/public');
     mkdir(path + '/public/javascripts');

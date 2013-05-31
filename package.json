@@ -1,6 +1,6 @@
 { 
 	"name": "ceftool", 
-	"version": "0.0.1", 
+	"version": "0.1.0", 
 	"description": "To create cef projects really easy.", 
 	
 	"author": "Mohammed Neundorf <mn@ninevillage.com>", 
